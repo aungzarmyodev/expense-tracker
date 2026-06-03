@@ -1,7 +1,7 @@
 import 'package:expense_tracker_app/features/home/presentation/bloc/expense_bloc.dart';
 import 'package:expense_tracker_app/features/home/presentation/bloc/expense_state.dart';
 import 'package:expense_tracker_app/features/home/presentation/widgets/item_list.dart';
-import 'package:expense_tracker_app/features/share/presentation/common_error_screen.dart';
+import 'package:expense_tracker_app/features/share/common_error_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'empty_widget.dart';

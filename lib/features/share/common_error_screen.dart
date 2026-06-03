@@ -18,10 +18,7 @@ class CommonErrorScreen extends StatelessWidget {
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Icon(
-              Icons.error_outline,
-              size: 64,
-            ),
+            const Icon(Icons.error_outline, size: 64),
             const SizedBox(height: 16),
             Text(
               message,
@@ -30,10 +27,7 @@ class CommonErrorScreen extends StatelessWidget {
             ),
             if (onRetry != null) ...[
               const SizedBox(height: 24),
-              ElevatedButton(
-                onPressed: onRetry,
-                child: const Text('Retry'),
-              ),
+              ElevatedButton(onPressed: onRetry, child: const Text('Retry')),
             ],
           ],
         ),
