@@ -25,7 +25,7 @@ class LanguageDialog extends StatelessWidget {
           ),
 
           ListTile(
-            title: const Text("Myanmar"),
+            title: const Text("မြန်မာ"),
             onTap: () {
               lang.loadLanguage('my');
               Navigator.pop(context);

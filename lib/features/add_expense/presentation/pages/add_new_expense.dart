@@ -1,3 +1,5 @@
+import 'package:expense_tracker_app/core/language/language_service.dart';
+import 'package:expense_tracker_app/features/home/consts/categories.dart';
 import 'package:expense_tracker_app/features/home/data/model/expense_model.dart';
 import 'package:expense_tracker_app/features/home/presentation/bloc/expense_bloc.dart';
 import 'package:expense_tracker_app/features/home/presentation/bloc/expense_event.dart';
@@ -15,16 +17,6 @@ class _AddNewExpenseState extends State<AddNewExpense> {
   final _formKey = GlobalKey<FormState>();
 
   final _amountController = TextEditingController();
-
-  final List<String> categories = [
-    'Food',
-    'Transport',
-    'Shopping',
-    'Bills',
-    'Entertainment',
-    'Health',
-    'Other',
-  ];
 
   String? _selectedCategory;
   DateTime _selectedDate = DateTime.now();
@@ -75,6 +67,8 @@ class _AddNewExpenseState extends State<AddNewExpense> {
 
   @override
   Widget build(BuildContext context) {
+    final lang = context.read<LanguageService>();
+
     return Padding(
       padding: EdgeInsets.only(
         left: 16,
@@ -89,22 +83,22 @@ class _AddNewExpenseState extends State<AddNewExpense> {
             mainAxisSize: MainAxisSize.min,
             children: [
               Text(
-                'Add Expense',
+                lang.text('add_expense'),
                 style: Theme.of(context).textTheme.titleLarge,
               ),
 
               const SizedBox(height: 24),
 
               DropdownButtonFormField<String>(
-                value: _selectedCategory,
-                decoration: const InputDecoration(
-                  labelText: 'Category',
+                initialValue: _selectedCategory,
+                decoration: InputDecoration(
+                  labelText: lang.text('category'),
                   border: OutlineInputBorder(),
                 ),
                 items: categories.map((category) {
                   return DropdownMenuItem(
                     value: category,
-                    child: Text(category),
+                    child: Text(lang.text(category)),
                   );
                 }).toList(),
                 onChanged: (value) {
@@ -121,18 +115,18 @@ class _AddNewExpenseState extends State<AddNewExpense> {
                 keyboardType: const TextInputType.numberWithOptions(
                   decimal: true,
                 ),
-                decoration: const InputDecoration(
-                  labelText: 'Amount',
+                decoration: InputDecoration(
+                  labelText: lang.text('amount'),
                   prefixText: '\$ ',
                   border: OutlineInputBorder(),
                 ),
                 validator: (value) {
                   if (value == null || value.trim().isEmpty) {
-                    return 'Please enter amount';
+                    return lang.text('please_enter_amount');
                   }
 
                   if (double.tryParse(value) == null) {
-                    return 'Invalid amount';
+                    return lang.text('invalid_amount');
                   }
 
                   return null;
@@ -144,8 +138,8 @@ class _AddNewExpenseState extends State<AddNewExpense> {
               InkWell(
                 onTap: _pickDate,
                 child: InputDecorator(
-                  decoration: const InputDecoration(
-                    labelText: 'Date',
+                  decoration: InputDecoration(
+                    labelText: lang.text('date'),
                     border: OutlineInputBorder(),
                   ),
                   child: Row(
@@ -166,7 +160,7 @@ class _AddNewExpenseState extends State<AddNewExpense> {
                 width: double.infinity,
                 child: ElevatedButton(
                   onPressed: _saveExpense,
-                  child: const Text('Save Expense'),
+                  child: Text(lang.text('save')),
                 ),
               ),
             ],

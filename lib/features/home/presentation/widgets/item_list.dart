@@ -1,6 +1,8 @@
+import 'package:expense_tracker_app/core/language/language_service.dart';
 import 'package:expense_tracker_app/core/utils/date_utils.dart';
 import 'package:expense_tracker_app/features/home/data/model/expense_model.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class ItemList extends StatelessWidget {
   final ExpenseModel expense;
@@ -9,6 +11,7 @@ class ItemList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final lang = context.watch<LanguageService>();
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Padding(
@@ -20,7 +23,7 @@ class ItemList extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    expense.category,
+                    lang.text(expense.category),
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.bold),
                   ),
                   const SizedBox(height: 4),

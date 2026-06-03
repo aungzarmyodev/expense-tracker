@@ -1,9 +1,9 @@
-const expenseCategories = [
-  'Food',
-  'Transport',
-  'Shopping',
-  'Bills',
-  'Entertainment',
-  'Health',
-  'Other',
+const categories = [
+  'food',
+  'transport',
+  'shopping',
+  'bills',
+  'entertainment',
+  'health',
+  'other',
 ];
