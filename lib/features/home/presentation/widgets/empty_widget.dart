@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:expense_tracker_app/core/theme/app_colors.dart';
 
 class EmptyWidget extends StatelessWidget {
-  final VoidCallback? onAddExpense;
-
-  const EmptyWidget({super.key, this.onAddExpense});
+  const EmptyWidget({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +15,7 @@ class EmptyWidget extends StatelessWidget {
             Icon(
               Icons.receipt_long_outlined,
               size: 72,
-              color: Theme.of(context).colorScheme.primary,
+              color: AppColors.primary,
             ),
             const SizedBox(height: 16),
             Text(
@@ -30,14 +29,6 @@ class EmptyWidget extends StatelessWidget {
               style: Theme.of(context).textTheme.bodyMedium,
               textAlign: TextAlign.center,
             ),
-            if (onAddExpense != null) ...[
-              const SizedBox(height: 24),
-              ElevatedButton.icon(
-                onPressed: onAddExpense,
-                icon: const Icon(Icons.add),
-                label: const Text('Add Expense'),
-              ),
-            ],
           ],
         ),
       ),

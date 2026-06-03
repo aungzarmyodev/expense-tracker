@@ -1,4 +1,5 @@
 import 'package:expense_tracker_app/features/home/presentation/bloc/expense_bloc.dart';
+import 'package:expense_tracker_app/features/home/presentation/bloc/expense_event.dart';
 import 'package:expense_tracker_app/features/home/presentation/bloc/expense_state.dart';
 import 'package:expense_tracker_app/features/home/presentation/widgets/item_list.dart';
 import 'package:expense_tracker_app/features/share/common_error_screen.dart';
@@ -15,10 +16,8 @@ class HomeWidget extends StatefulWidget {
 
 class _HomeWidgetState extends State<HomeWidget> {
   void _fetchExpenses() {
-    // TODO: Implement the logic to fetch expenses from the database or API
+    context.read<ExpenseBloc>().add(FetchExpenses());
   }
-
-  void _addExpense() {}
 
   @override
   Widget build(BuildContext context) {
@@ -29,7 +28,7 @@ class _HomeWidgetState extends State<HomeWidget> {
         }
 
         if (state is EmptyState) {
-          return EmptyWidget(onAddExpense: _addExpense);
+          return EmptyWidget();
         }
 
         if (state is SuccessState) {

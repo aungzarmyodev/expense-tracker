@@ -1,51 +1,36 @@
-import 'package:expense_tracker_app/features/home/data/model/expense_model.dart';
+import 'package:expense_tracker_app/features/home/domain/repository/expense_repository.dart';
+import 'package:expense_tracker_app/features/home/presentation/bloc/expense_event.dart';
+import 'package:expense_tracker_app/features/home/presentation/bloc/expense_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import 'expense_event.dart';
-import 'expense_state.dart';
-
 class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
-  ExpenseBloc() : super(LoadingState()) {
+  final ExpenseRepository repository;
+
+  ExpenseBloc({required this.repository}) : super(LoadingState()) {
     on<FetchExpenses>(_onFetchExpenses);
+    on<AddExpense>(_onAddExpense);
   }
 
   Future<void> _onFetchExpenses(
     FetchExpenses event,
     Emitter<ExpenseState> emit,
   ) async {
-    try {
+    final expenses = await repository.getExpenses();
 
-       emit(LoadingState());
-      await Future.delayed(const Duration(seconds: 1));
-
-      final expenses = [
-        ExpenseModel(
-          id: '1',
-          category: 'Groceries',
-          amount: 50.0,
-          date: DateTime.now(),
-        ),
-        ExpenseModel(
-          id: '2',
-          category: 'Rent',
-          amount: 1000.0,
-          date: DateTime.now(),
-        ),
-        ExpenseModel(
-          id: '3',
-          category: 'Utilities',
-          amount: 100.0,
-          date: DateTime.now(),
-        ),
-      ];
-
-      if (expenses.isEmpty) {
-        emit(EmptyState());
-      } else {
-        emit(SuccessState(expenses));
-      }
-    } catch (_) {
-      emit(ErrorState('Failed to load expenses.'));
+    if (expenses.isEmpty) {
+      emit(EmptyState());
+      return;
     }
+
+    emit(SuccessState(expenses));
+  }
+
+  Future<void> _onAddExpense(
+    AddExpense event,
+    Emitter<ExpenseState> emit,
+  ) async {
+    await repository.addExpense(event.expense);
+
+    add(FetchExpenses());
   }
 }

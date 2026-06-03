@@ -1,8 +1,10 @@
+import 'package:expense_tracker_app/core/theme/app_colors.dart';
+import 'package:expense_tracker_app/features/add_expense/presentation/pages/add_new_expense.dart';
+import 'package:expense_tracker_app/features/home/domain/repository/expense_repository.dart';
 import 'package:expense_tracker_app/features/home/presentation/bloc/expense_bloc.dart';
 import 'package:expense_tracker_app/features/home/presentation/bloc/expense_event.dart';
 import 'package:expense_tracker_app/features/home/presentation/widgets/home_widget.dart';
 import 'package:flutter/material.dart';
-import 'package:expense_tracker_app/core/theme/app_colors.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class Homescreen extends StatelessWidget {
@@ -11,24 +13,48 @@ class Homescreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (_) => ExpenseBloc()..add(FetchExpenses()),
+      create: (blocContext) {
+        final repository = blocContext.read<ExpenseRepository>();
+
+        return ExpenseBloc(repository: repository)..add(FetchExpenses());
+      },
       child: Scaffold(
-        backgroundColor: AppColors.background,
         appBar: AppBar(
           backgroundColor: AppColors.primary,
-          title:  Text('Expense Tracker', style: TextStyle(color: AppColors.surface)),
+          title: const Text(
+            'Expense Tracker',
+            style: TextStyle(color: AppColors.surface),
+          ),
           centerTitle: true,
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.settings_outlined, color: AppColors.surface),
+          actions: const [
+            Padding(
+              padding: EdgeInsets.all(12.0),
+              child: Icon(Icons.settings_outlined, color: AppColors.surface),
             ),
           ],
         ),
         body: const HomeWidget(),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          child: const Icon(Icons.add),
+        floatingActionButton: Builder(
+          builder: (context) {
+            return FloatingActionButton(
+              backgroundColor: AppColors.secondary,
+              onPressed: () {
+                final bloc = context.read<ExpenseBloc>();
+
+                showModalBottomSheet(
+                  context: context,
+                  isScrollControlled: true,
+                  builder: (_) {
+                    return BlocProvider.value(
+                      value: bloc,
+                      child: const AddNewExpense(),
+                    );
+                  },
+                );
+              },
+              child: const Icon(Icons.add, color: AppColors.surface),
+            );
+          },
         ),
       ),
     );

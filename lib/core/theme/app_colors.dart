@@ -12,4 +12,7 @@ class AppColors {
 
   static const success = Color(0xFF22C55E);
   static const error = Color(0xFFEF4444);
+
+  static const white = Colors.white;
+  static const gray = Colors.grey;
 }
