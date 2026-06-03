@@ -28,3 +28,10 @@ It allows users to manage daily expenses with **local storage (SQLite)**, **AES 
 - Intl (Localization support)
 
 ---
+
+## 🧪 Testing Strategy
+
+This project includes:
+
+- Unit Tests (Bloc, Repository, Encryption)
+- Widget Tests (UI components)
