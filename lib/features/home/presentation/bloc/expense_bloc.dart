@@ -21,8 +21,7 @@ class ExpenseBloc extends Bloc<ExpenseEvent, ExpenseState> {
       emit(EmptyState());
       return;
     }
-
-    emit(SuccessState(expenses));
+    emit(SuccessState(expenses: expenses));
   }
 
   Future<void> _onAddExpense(

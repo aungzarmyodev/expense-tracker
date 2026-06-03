@@ -9,11 +9,11 @@ class EmptyState extends ExpenseState {}
 class SuccessState extends ExpenseState {
   final List<ExpenseModel> expenses;
 
-  SuccessState(this.expenses);
+  SuccessState({required this.expenses});
 }
 
 class ErrorState extends ExpenseState {
   final String message;
 
-  ErrorState(this.message);
+  ErrorState({required this.message});
 }
